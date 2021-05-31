@@ -1,0 +1,48 @@
+package kodlamaio.hrms.api;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import kodlamaio.hrms.business.abstracts.EmployerService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.entities.concretes.Employer;
+
+@RestController
+@RequestMapping("/api/Employers")
+public class EmployersController {
+	
+	private EmployerService employerService;
+	
+	public EmployersController(EmployerService employerService) {
+		super();
+		this.employerService = employerService;
+	}
+	
+	@GetMapping("/getall")
+	DataResult<List<Employer>> getAll(){
+		
+		return	this.employerService.getAll();
+	}
+	
+	@PostMapping("/add")
+	Result add(@RequestBody Employer employer) {
+		return this.employerService.add(employer);
+	}
+	
+	@PostMapping("/setStatus")
+	Result setAccountStatus(@RequestBody boolean status,@RequestBody int employerId) {
+		return this.employerService.setAccountStatus(status, employerId);
+	}
+	
+	@GetMapping("/getByAccountVerify")
+	DataResult<List<Employer>> getByAccountVerify(@RequestParam boolean status){
+		return this.employerService.getByAccountVerify(status);
+	}
+}
