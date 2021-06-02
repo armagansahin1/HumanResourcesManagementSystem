@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kodlamaio.hrms.business.abstracts.CompanyService;
 import kodlamaio.hrms.business.abstracts.EmployerService;
-import kodlamaio.hrms.business.abstracts.UserService;
 import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
@@ -16,22 +14,20 @@ import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.Employer;
-import kodlamaio.hrms.entities.concretes.User;
+
 
 
 @Service
 public class EmployerManager implements EmployerService{
 	
 	private EmployerDao employerDao;
-	private UserService userService;
-	private CompanyService companyService;
+
 	
 	@Autowired
-	public EmployerManager(EmployerDao employerDao,UserService userService,CompanyService companyService) {
+	public EmployerManager(EmployerDao employerDao) {
 		
 		this.employerDao = employerDao;
-		this.userService = userService;
-		this.companyService = companyService;
+
 	}
 
 	@Override
@@ -45,8 +41,8 @@ public class EmployerManager implements EmployerService{
 		
 		employer.getCompany().setWebsite(addWWW(employer.getCompany().getWebsite()));
 		employer.setAccountVerify(false);
-		//var result = BusinessRules.Run(new Result[]{checkEmailForDomain(employer)});
-		Result result = null;
+		var result = BusinessRules.Run(new Result[]{checkEmailForDomain(employer)});
+		
 		if(result == null) {
 			
 				this.employerDao.save(employer);
@@ -60,11 +56,11 @@ public class EmployerManager implements EmployerService{
 	}
 	
 	private Result checkEmailForDomain(Employer employer) {
-		if(employer.getUser().getEmail().trim().contains(employer.getCompany().getWebsite().trim()) == true) {
+		String webDomain = employer.getCompany().getWebsite().replace("www.", "");
+		if(employer.getUser().getEmail().contains(webDomain)) {
 			return new SuccessResult();
 		}
-		
-		return new ErrorResult("Email adresiniz Websitenizle uyumlu olmalı " + employer.getCompany().getWebsite() + " " + employer.getUser().getEmail());
+		return new ErrorResult("Email adresinizle web sayfası eşleşmiyor");
 	}
 	
 	private String addWWW(String website) {

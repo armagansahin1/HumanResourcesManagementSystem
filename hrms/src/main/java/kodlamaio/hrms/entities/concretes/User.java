@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -22,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name="Users")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","employers","jobSeekers","systemPersonels"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","employers","candidates","systemPersonels"})
 public class User {
 	
 	@Id
@@ -30,21 +33,30 @@ public class User {
 	@Column(name="Id")
 	private int id;
 	
+	@NotNull
+	@NotBlank
 	@Column(name="FirstName")
 	private String firstName;
 	
+	@NotNull
+	@NotBlank
 	@Column(name="LastName")
 	private String lastName;
 	
+	@NotNull
+	@NotBlank
 	@Column(name="NationalityId")
 	private String nationalityId;
 	
 	@Column(name="BirthOfDate")
 	private Date birthOfDate;
 	
+	@Email
 	@Column(name="Email")
 	private String email;
 	
+	@NotNull
+	@NotBlank
 	@Column(name="Password")
 	private String password;
 	
@@ -55,7 +67,7 @@ public class User {
 	private List<Employer> employers;
 	
 	@OneToMany(mappedBy = "user")
-	private List<JobSeeker> jobSeekers;
+	private List<Candidate> candidates;
 	
 	@OneToMany(mappedBy = "user")
 	private List<SystemPersonel> systemPersonels;
