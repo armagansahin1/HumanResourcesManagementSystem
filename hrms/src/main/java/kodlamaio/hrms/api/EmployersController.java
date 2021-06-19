@@ -2,6 +2,7 @@ package kodlamaio.hrms.api;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import kodlamaio.hrms.entities.concretes.Employer;
 
 @RestController
 @RequestMapping("/api/Employers")
+@CrossOrigin
 public class EmployersController {
 	
 	private EmployerService employerService;

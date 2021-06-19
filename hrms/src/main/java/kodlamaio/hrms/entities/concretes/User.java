@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -48,8 +49,8 @@ public class User {
 	@Column(name="NationalityId")
 	private String nationalityId;
 	
-	@Column(name="BirthOfDate")
-	private Date birthOfDate;
+	@Column(name="dateOfBirth")
+	private Date dateOfBirth;
 	
 	@Email
 	@Column(name="Email")
@@ -63,15 +64,13 @@ public class User {
 	@Column(name="EmailVerify")
 	private boolean emailVerify;
 	
-	@OneToMany(mappedBy = "user")
-	private List<Employer> employers;
+	@OneToOne(mappedBy = "user")
+	private Employer employers;
 	
-	@OneToMany(mappedBy = "user")
-	private List<Candidate> candidates;
+	@OneToOne(mappedBy = "user")
+	private Candidate candidates;
 	
-	@OneToMany(mappedBy = "user")
-	private List<SystemPersonel> systemPersonels;
-
-
+	@OneToOne(mappedBy = "user")
+	private SystemPersonel systemPersonels;
 	
 }

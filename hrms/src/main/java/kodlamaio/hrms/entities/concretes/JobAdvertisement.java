@@ -45,8 +45,18 @@ public class JobAdvertisement {
 	@Column(name="relaseDate")
 	private Date relaseDate;
 	
-	@Column(name="lastDate")
-	private Date lastDate;
+	@Column(name="deadLine")
+	private Date deadLine;
+	
+	@Column(name="workType")
+	private String workType;
+	
+	@Column(name="workTime")
+	private String workTime;
+	
+	@Column(name="positionName")
+	private String positionName;
+	
 	
 	@NotNull
 	@NotBlank
@@ -56,17 +66,12 @@ public class JobAdvertisement {
 	@Column(name="advertismentStatus")
 	private boolean advertismentStatus;
 	
-	@NotNull
-	@NotBlank
-	@ManyToOne
-	@JoinColumn(name="cityId")
-	private City city;
+	@Column(name="city")
+	private String city;
 	
 	@ManyToOne
 	@JoinColumn(name="employerId")
 	private Employer employer;
 	
-	@ManyToOne
-	@JoinColumn(name="professionId")
-	private Profession profession;
+
 }

@@ -2,6 +2,7 @@ package kodlamaio.hrms.api;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 
 @RestController
 @RequestMapping("/api/jobAdvertisements")
+@CrossOrigin
 public class JobAdvertisementsController {
 	private JobAdvertisementService jobAdvertisementService;
 
@@ -33,13 +35,18 @@ public class JobAdvertisementsController {
 		return this.jobAdvertisementService.add(jobAdvertisement);
 	}
 	
-	@GetMapping("/getByOrderByRelaseDateDesc")
-	public DataResult<List<JobAdvertisement>> getByOrderByRelaseDateDesc(){
-		return this.jobAdvertisementService.getByOrderByRelaseDateDesc();
+	@GetMapping("/getByAdvertismentStatusTrueOrderByRelaseDateDesc()")
+	public DataResult<List<JobAdvertisement>> getByAdvertismentStatusTrueOrderByRelaseDateDesc(){
+		return this.jobAdvertisementService.getByAdvertismentStatusTrueOrderByRelaseDateDesc();
 	}
 	
 	@PostMapping("/changeStatus")
 	public Result changeStatus(int id, boolean status) {
 		return this.jobAdvertisementService.changeStatus(id, status);
+	}
+	
+	@GetMapping("/findAllByOrderByRelaseDateDesc")
+	public DataResult<List<JobAdvertisement>> findAllByOrderByRelaseDateDesc(){
+		return this.jobAdvertisementService.findAllByOrderByRelaseDateDesc();
 	}
 }

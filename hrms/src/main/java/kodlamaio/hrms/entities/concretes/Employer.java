@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -39,12 +40,12 @@ public class Employer {
 	@Column(name="account_verify")
 	private boolean accountVerify;
 
-	@ManyToOne()
+	@OneToOne()
 	@JoinColumn(name="user_id")
 	private User user;
 	
 
-	@ManyToOne()
+	@OneToOne()
 	@JoinColumn(name="company_id")
 	private Company company;
 

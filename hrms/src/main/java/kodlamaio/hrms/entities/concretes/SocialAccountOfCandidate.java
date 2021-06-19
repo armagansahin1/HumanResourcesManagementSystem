@@ -25,12 +25,12 @@ public class SocialAccountOfCandidate {
 	@Column(name="id")
 	private int id;
 	
-	@Column(name="githubAdress")
-	private String githubAdress;
+	@Column(name="githubLink")
+	private String githubLink;
 	
 	
-	@Column(name="linkedinAdress")
-	private int linkedinAdress;
+	@Column(name="linkedinLink")
+	private int linkedinLink;
 	
 	
 	@ManyToOne

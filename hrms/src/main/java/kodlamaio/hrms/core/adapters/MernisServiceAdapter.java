@@ -14,7 +14,7 @@ public boolean verify(User user) {
 		KPSPublicSoapProxy service=new KPSPublicSoapProxy();
 		try {
 		return	service.TCKimlikNoDogrula(Long.parseLong(user.getNationalityId()), user.getFirstName().toUpperCase(new Locale("tr")), 
-				user.getLastName().toUpperCase(new Locale("tr")), user.getBirthOfDate().getYear());
+				user.getLastName().toUpperCase(new Locale("tr")), user.getDateOfBirth().getYear());
 		} catch (RemoteException e) {
 			
 			e.printStackTrace();

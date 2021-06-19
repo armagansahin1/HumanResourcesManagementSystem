@@ -8,6 +8,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import kodlamaio.hrms.entities.concretes.Photo;
 
 @RestController
 @RequestMapping("/api/photos")
+@CrossOrigin
 public class PhotosController {
 	private PhotoService photoService;
 	private CloudService cloudService;
@@ -42,7 +44,7 @@ public class PhotosController {
 		if(!multipartFile.isEmpty()) {
 			var uploadResult = this.cloudService.upload(multipartFile);
 			Photo photo = new Photo(0,uploadResult.get("url").toString(),
-					uploadResult.get("public_id").toString(),new Date(),new Candidate(candidateId,null,null,null,null,null));
+					uploadResult.get("public_id").toString(),new Date(),new Candidate(candidateId,null,null,null,null,null,null,null));
 			return this.photoService.add(photo);
 		}
 		return new ErrorResult("Resim seçmediniz");
@@ -52,6 +54,11 @@ public class PhotosController {
 	@GetMapping("/getByCandidateId")
 	public DataResult<List<Photo>> getByCandidateId(@RequestParam int candidateId){
 		return this.photoService.getByCandidateId(candidateId);
+	}
+	
+	@GetMapping("/getAll")
+	public DataResult<List<Photo>> getAll(){
+		return this.photoService.getAll();
 	}
 
 }

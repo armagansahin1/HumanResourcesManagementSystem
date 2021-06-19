@@ -37,5 +37,10 @@ public class PhotoManager implements PhotoService{
 		return new SuccessDataResult<List<Photo>>(this.photoDao.getByCandidate_Id(candidateId));
 	
 	}
+
+	@Override
+	public DataResult<List<Photo>> getAll() {
+		return new SuccessDataResult<List<Photo>>(this.photoDao.findAll());
+	}
 	
 }

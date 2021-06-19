@@ -10,4 +10,5 @@ public interface PhotoService {
 	
 	Result add(Photo photo);
 	DataResult<List<Photo>> getByCandidateId(int candidateId);
+	DataResult<List<Photo>> getAll();
 }

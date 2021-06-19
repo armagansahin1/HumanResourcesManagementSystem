@@ -10,7 +10,8 @@ import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 public interface JobAdvertisementService {
 	
  DataResult<List<JobAdvertisement>> getAll();
- DataResult<List<JobAdvertisement>> getByOrderByRelaseDateDesc();
+ DataResult<List<JobAdvertisement>> getByAdvertismentStatusTrueOrderByRelaseDateDesc();
+ DataResult<List<JobAdvertisement>> findAllByOrderByRelaseDateDesc();
  Result add(JobAdvertisement jobAdvertisement);
  Result changeStatus(int id, boolean status);
 }

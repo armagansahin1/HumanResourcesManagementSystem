@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kodlamaio.hrms.business.abstracts.CompanyService;
 import kodlamaio.hrms.business.abstracts.EmployerService;
+import kodlamaio.hrms.business.abstracts.UserService;
 import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
@@ -21,13 +23,15 @@ import kodlamaio.hrms.entities.concretes.Employer;
 public class EmployerManager implements EmployerService{
 	
 	private EmployerDao employerDao;
-
+	private UserService userService;
+	private CompanyService companyService;
 	
 	@Autowired
-	public EmployerManager(EmployerDao employerDao) {
+	public EmployerManager(EmployerDao employerDao,UserService userService,CompanyService companyService) {
 		
 		this.employerDao = employerDao;
-
+		this.userService = userService;
+		this.companyService=companyService;
 	}
 
 	@Override
@@ -40,12 +44,13 @@ public class EmployerManager implements EmployerService{
 	public Result add(Employer employer) {
 		
 		employer.getCompany().setWebsite(addWWW(employer.getCompany().getWebsite()));
-		employer.setAccountVerify(false);
+		employer.setAccountVerify(true);
 		var result = BusinessRules.Run(new Result[]{checkEmailForDomain(employer)});
 		
 		if(result == null) {
-			
+
 				this.employerDao.save(employer);
+				
 				return new SuccessResult("Eklendi");
 			
 		

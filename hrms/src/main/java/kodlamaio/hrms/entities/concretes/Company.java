@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name="Companies")
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","employers"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","employer"})
 public class Company {
 	
 	@Id
@@ -29,14 +30,14 @@ public class Company {
 	@Column(name="id")
 	private int id;
 	
-	@Column(name = "company_name")
-	private String company_name;
+	@Column(name = "companyName")
+	private String companyName;
 		
 	@Column(name = "website")
 	private String website;
 	
-	@OneToMany(mappedBy = "company")
-	private List<Employer> employers;
+	@OneToOne(mappedBy = "company")
+	private Employer employer;
 	
 	
 }

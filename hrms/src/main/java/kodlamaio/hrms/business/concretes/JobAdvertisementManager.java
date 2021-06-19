@@ -1,6 +1,5 @@
 package kodlamaio.hrms.business.concretes;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -42,22 +41,27 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	private JobAdvertisement setDefaults(JobAdvertisement jobAdvertisement) {
 		Date date = new Date();
 		jobAdvertisement.setRelaseDate(date);
-		jobAdvertisement.setAdvertismentStatus(true);
+		jobAdvertisement.setAdvertismentStatus(false);
 		return jobAdvertisement;
 	}
 
-	@Override
-	public DataResult<List<JobAdvertisement>> getByOrderByRelaseDateDesc() {
-		// TODO Auto-generated method stub
-		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.getByAdvertismentStatusTrueOrderByRelaseDateDesc());
-	}
-
+	
 	@Override
 	public Result changeStatus(int id, boolean status) {
 		JobAdvertisement jobAdvertisement = this.jobAdvertisementDao.findById(id).get();
 		jobAdvertisement.setAdvertismentStatus(status);
 		this.jobAdvertisementDao.save(jobAdvertisement);
 		return new SuccessResult("İlan aktif durumu güncellendi");
+	}
+
+	@Override
+	public DataResult<List<JobAdvertisement>> getByAdvertismentStatusTrueOrderByRelaseDateDesc() {
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.getByAdvertismentStatusTrueOrderByRelaseDateDesc());
+	}
+
+	@Override
+	public DataResult<List<JobAdvertisement>> findAllByOrderByRelaseDateDesc() {
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findAllByOrderByRelaseDateDesc());
 	}
 
 }
