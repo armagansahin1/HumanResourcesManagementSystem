@@ -53,6 +53,6 @@ public class Candidate {
 	private List<LanguageOfCandidate> languageOfCandidates;
 	
 	@OneToMany(mappedBy="candidate",fetch = FetchType.LAZY)
-	private List<LanguageOfCandidate> socialAccountOfCandidates;
+	private List<SocialAccountOfCandidate> socialAccountOfCandidates;
 	
 }

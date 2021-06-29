@@ -35,7 +35,7 @@ public class JobAdvertisementsController {
 		return this.jobAdvertisementService.add(jobAdvertisement);
 	}
 	
-	@GetMapping("/getByAdvertismentStatusTrueOrderByRelaseDateDesc()")
+	@GetMapping("/getByAdvertismentStatusTrueOrderByRelaseDateDesc")
 	public DataResult<List<JobAdvertisement>> getByAdvertismentStatusTrueOrderByRelaseDateDesc(){
 		return this.jobAdvertisementService.getByAdvertismentStatusTrueOrderByRelaseDateDesc();
 	}
@@ -48,5 +48,10 @@ public class JobAdvertisementsController {
 	@GetMapping("/findAllByOrderByRelaseDateDesc")
 	public DataResult<List<JobAdvertisement>> findAllByOrderByRelaseDateDesc(){
 		return this.jobAdvertisementService.findAllByOrderByRelaseDateDesc();
+	}
+	
+	@GetMapping("/getPageFormat")
+	public DataResult<List<JobAdvertisement>> getPageFormat(int pageSize,int pageNo){
+		return this.jobAdvertisementService.getAll(pageSize, pageNo);
 	}
 }

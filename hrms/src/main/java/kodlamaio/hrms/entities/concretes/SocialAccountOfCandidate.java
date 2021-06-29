@@ -30,7 +30,7 @@ public class SocialAccountOfCandidate {
 	
 	
 	@Column(name="linkedinLink")
-	private int linkedinLink;
+	private String linkedinLink;
 	
 	
 	@ManyToOne

@@ -9,6 +9,6 @@ import kodlamaio.hrms.entities.concretes.Photo;
 public interface PhotoService {
 	
 	Result add(Photo photo);
-	DataResult<List<Photo>> getByCandidateId(int candidateId);
+	DataResult<Photo> getByCandidateId(int candidateId);
 	DataResult<List<Photo>> getAll();
 }

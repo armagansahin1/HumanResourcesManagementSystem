@@ -52,7 +52,7 @@ public class PhotosController {
 		
 	}
 	@GetMapping("/getByCandidateId")
-	public DataResult<List<Photo>> getByCandidateId(@RequestParam int candidateId){
+	public DataResult<Photo> getByCandidateId(@RequestParam int candidateId){
 		return this.photoService.getByCandidateId(candidateId);
 	}
 	

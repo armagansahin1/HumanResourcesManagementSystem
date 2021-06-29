@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.JobAdvertisementService;
@@ -38,13 +40,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 		return new SuccessResult("Eklendi");
 	}
 	
-	private JobAdvertisement setDefaults(JobAdvertisement jobAdvertisement) {
-		Date date = new Date();
-		jobAdvertisement.setRelaseDate(date);
-		jobAdvertisement.setAdvertismentStatus(false);
-		return jobAdvertisement;
-	}
-
+	
 	
 	@Override
 	public Result changeStatus(int id, boolean status) {
@@ -56,6 +52,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 
 	@Override
 	public DataResult<List<JobAdvertisement>> getByAdvertismentStatusTrueOrderByRelaseDateDesc() {
+		
 		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.getByAdvertismentStatusTrueOrderByRelaseDateDesc());
 	}
 
@@ -63,5 +60,20 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	public DataResult<List<JobAdvertisement>> findAllByOrderByRelaseDateDesc() {
 		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findAllByOrderByRelaseDateDesc());
 	}
+
+	@Override
+	public DataResult<List<JobAdvertisement>> getAll(int pageSize, int pageNo) {
+		Pageable pageable = PageRequest.of(pageNo-1,pageSize);
+		int a = this.jobAdvertisementDao.findAll(pageable).getTotalPages();
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findAll(pageable).getContent(),String.valueOf(a));
+	}
+	
+	private JobAdvertisement setDefaults(JobAdvertisement jobAdvertisement) {
+		Date date = new Date();
+		jobAdvertisement.setRelaseDate(date);
+		jobAdvertisement.setAdvertismentStatus(false);
+		return jobAdvertisement;
+	}
+
 
 }

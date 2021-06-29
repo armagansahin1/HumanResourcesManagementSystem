@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import kodlamaio.hrms.entities.concretes.Education;
+import kodlamaio.hrms.entities.concretes.SocialAccountOfCandidate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,5 @@ public class CandidateDetailsDto {
 	private String profession;
 	private String email;
 	private Date dateOfBirth; 
-	
+
 }

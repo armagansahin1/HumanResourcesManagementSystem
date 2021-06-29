@@ -32,9 +32,9 @@ public class PhotoManager implements PhotoService{
 	}
 
 	@Override
-	public DataResult<List<Photo>> getByCandidateId(int candidateId) {
+	public DataResult<Photo> getByCandidateId(int candidateId) {
 		
-		return new SuccessDataResult<List<Photo>>(this.photoDao.getByCandidate_Id(candidateId));
+		return new SuccessDataResult<Photo>(this.photoDao.getByCandidate_Id(candidateId));
 	
 	}
 
