@@ -44,7 +44,7 @@ public class UserManager implements UserService{
 				checkPerson(user), verifyAccountWithEmail(user.getEmail())});
 		if(result == null) {
 			this.userDao.save(user);
-			return new SuccessResult("Eklendi " + user.getId());
+			return new SuccessResult("Kullanıcı Eklendi");
 		}
 		return result;
 		

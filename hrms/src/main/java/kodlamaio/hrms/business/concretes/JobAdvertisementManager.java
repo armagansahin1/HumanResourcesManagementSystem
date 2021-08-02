@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+
 import kodlamaio.hrms.business.abstracts.JobAdvertisementService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
@@ -19,11 +20,13 @@ import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 @Service
 public class JobAdvertisementManager implements JobAdvertisementService{
 	private JobAdvertisementDao jobAdvertisementDao;
+
 	
 	@Autowired
 	public JobAdvertisementManager(JobAdvertisementDao jobAdvertisementDao) {
 		super();
 		this.jobAdvertisementDao = jobAdvertisementDao;
+
 	}
 
 	@Override
@@ -35,6 +38,7 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	@Override
 	public Result add(JobAdvertisement jobAdvertisement) {
 		setDefaults(jobAdvertisement);
+
 		this.jobAdvertisementDao.save(jobAdvertisement);
 		
 		return new SuccessResult("Eklendi");
@@ -51,29 +55,40 @@ public class JobAdvertisementManager implements JobAdvertisementService{
 	}
 
 	@Override
-	public DataResult<List<JobAdvertisement>> getByAdvertismentStatusTrueOrderByRelaseDateDesc() {
+	public DataResult<List<JobAdvertisement>> getByAdvertismentStatusTrueOrderByPublishDateDesc() {
 		
-		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.getByAdvertismentStatusTrueOrderByRelaseDateDesc());
+		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.getByAdvertismentStatusTrueOrderByPublishDateDesc());
 	}
 
 	@Override
-	public DataResult<List<JobAdvertisement>> findAllByOrderByRelaseDateDesc() {
-		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findAllByOrderByRelaseDateDesc());
+	public DataResult<List<JobAdvertisement>> findAllByOrderByPublishDateDesc() {
+		return new SuccessDataResult<List<JobAdvertisement>>
+		(this.jobAdvertisementDao.findAllByOrderByPublishDateDesc());
 	}
 
 	@Override
 	public DataResult<List<JobAdvertisement>> getAll(int pageSize, int pageNo) {
 		Pageable pageable = PageRequest.of(pageNo-1,pageSize);
 		int a = this.jobAdvertisementDao.findAll(pageable).getTotalPages();
-		return new SuccessDataResult<List<JobAdvertisement>>(this.jobAdvertisementDao.findAll(pageable).getContent(),String.valueOf(a));
+		return new SuccessDataResult<List<JobAdvertisement>>
+		(this.jobAdvertisementDao.findAll(pageable).getContent(),String.valueOf(a));
 	}
+	
+	@Override
+	public DataResult<List<JobAdvertisement>> getByWorkType(String workType) {
+		
+		return new SuccessDataResult<List<JobAdvertisement>>
+		(this.jobAdvertisementDao.getByWorkTypeAndAdvertismentStatusTrue(workType));
+	}
+
 	
 	private JobAdvertisement setDefaults(JobAdvertisement jobAdvertisement) {
 		Date date = new Date();
-		jobAdvertisement.setRelaseDate(date);
+		jobAdvertisement.setPublishDate(date);
 		jobAdvertisement.setAdvertismentStatus(false);
 		return jobAdvertisement;
 	}
 
+	
 
 }

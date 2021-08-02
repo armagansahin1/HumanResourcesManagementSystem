@@ -13,9 +13,11 @@ public interface JobAdvertisementService {
  
  DataResult<List<JobAdvertisement>> getAll(int pageSize, int pageNo);
  
- DataResult<List<JobAdvertisement>> getByAdvertismentStatusTrueOrderByRelaseDateDesc();
+ DataResult<List<JobAdvertisement>> getByAdvertismentStatusTrueOrderByPublishDateDesc();
  
- DataResult<List<JobAdvertisement>> findAllByOrderByRelaseDateDesc();
+ DataResult<List<JobAdvertisement>> findAllByOrderByPublishDateDesc();
+ 
+ DataResult<List<JobAdvertisement>> getByWorkType(String workType);
  
  Result add(JobAdvertisement jobAdvertisement);
  

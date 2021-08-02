@@ -10,4 +10,5 @@ import kodlamaio.hrms.entities.concretes.City;
 public interface CityService {
 	Result add (City city);
 	DataResult<List<City>> getAll();
+	DataResult<List<City>> getAllByOrderByCityNameAsc();
 }

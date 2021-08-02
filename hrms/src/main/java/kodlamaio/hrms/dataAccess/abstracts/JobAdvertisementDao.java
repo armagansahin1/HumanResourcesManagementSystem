@@ -11,9 +11,12 @@ import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 
 
 public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement,Integer> {
-	List<JobAdvertisement> getByAdvertismentStatusTrueOrderByRelaseDateDesc();
-	List<JobAdvertisement> findAllByOrderByRelaseDateDesc();
 	
-	@Query("Select j From JobAdvertisement j Where j.advertismentStatus=true Order By j.relaseDate DESC")
+	List<JobAdvertisement> getByAdvertismentStatusTrueOrderByPublishDateDesc();
+	List<JobAdvertisement> findAllByOrderByPublishDateDesc();
+	
+	List<JobAdvertisement> getByWorkTypeAndAdvertismentStatusTrue(String workType);
+	
+	@Query("Select j From JobAdvertisement j Where j.advertismentStatus=true Order By j.publishDate DESC")
 	Page<JobAdvertisement> findAll(Pageable pageable);
 }

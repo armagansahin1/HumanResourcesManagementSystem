@@ -1,14 +1,15 @@
 package kodlamaio.hrms.entities.concretes;
 
 import java.util.Date;
-import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -26,7 +27,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name="Users")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","employers","candidates","systemPersonels"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","candidates","systemPersonels"})
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 	
 	@Id
@@ -36,24 +38,24 @@ public class User {
 	
 	@NotNull
 	@NotBlank
-	@Column(name="FirstName")
+	@Column(name="firstName")
 	private String firstName;
 	
 	@NotNull
 	@NotBlank
-	@Column(name="LastName")
+	@Column(name="lastName")
 	private String lastName;
 	
 	@NotNull
 	@NotBlank
-	@Column(name="NationalityId")
+	@Column(name="nationalityId")
 	private String nationalityId;
 	
 	@Column(name="dateOfBirth")
 	private Date dateOfBirth;
 	
 	@Email
-	@Column(name="Email")
+	@Column(name="email")
 	private String email;
 	
 	@NotNull
@@ -64,8 +66,6 @@ public class User {
 	@Column(name="EmailVerify")
 	private boolean emailVerify;
 	
-	@OneToOne(mappedBy = "user")
-	private Employer employers;
 	
 	@OneToOne(mappedBy = "user")
 	private Candidate candidates;

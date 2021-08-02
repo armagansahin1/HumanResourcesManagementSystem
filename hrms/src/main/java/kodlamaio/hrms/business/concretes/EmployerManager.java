@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kodlamaio.hrms.business.abstracts.CompanyService;
 import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.business.abstracts.UserService;
 import kodlamaio.hrms.core.utilities.business.BusinessRules;
@@ -16,6 +15,7 @@ import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.Employer;
+import kodlamaio.hrms.entities.dtos.EmployerForRegisterDto;
 
 
 
@@ -24,14 +24,14 @@ public class EmployerManager implements EmployerService{
 	
 	private EmployerDao employerDao;
 	private UserService userService;
-	private CompanyService companyService;
+
 	
 	@Autowired
-	public EmployerManager(EmployerDao employerDao,UserService userService,CompanyService companyService) {
+	public EmployerManager(EmployerDao employerDao,UserService userService) {
 		
 		this.employerDao = employerDao;
 		this.userService = userService;
-		this.companyService=companyService;
+
 	}
 
 	@Override
@@ -41,28 +41,45 @@ public class EmployerManager implements EmployerService{
 	}
 
 	@Override
-	public Result add(Employer employer) {
+	public Result add(EmployerForRegisterDto employerForRegisterDto){
 		
-		employer.getCompany().setWebsite(addWWW(employer.getCompany().getWebsite()));
-		employer.setAccountVerify(true);
-		var result = BusinessRules.Run(new Result[]{checkEmailForDomain(employer)});
+		employerForRegisterDto.setWebsite(addWWW(employerForRegisterDto.getWebsite()));
+
+		var result = BusinessRules.Run(new Result[]{checkEmailForDomain(employerForRegisterDto)});
 		
 		if(result == null) {
 
-				this.employerDao.save(employer);
+				Employer employer = new Employer();
+				employer.setFirstName(employerForRegisterDto.getFirstName().toUpperCase());
+				employer.setLastName(employerForRegisterDto.getLastName().toUpperCase());
+				employer.setEmail(employerForRegisterDto.getEmail());
+				employer.setNationalityId(employerForRegisterDto.getNationalityId());
+				employer.setDateOfBirth(employerForRegisterDto.getDateOfBirth());
+				employer.setPassword(employerForRegisterDto.getPassword());
+				employer.setPhone(employerForRegisterDto.getPhone());
+				employer.setCompanyName(employerForRegisterDto.getCompanyName().toUpperCase());
+				employer.setWebsite(employerForRegisterDto.getWebsite());
+				employer.setAccountVerify(true);
 				
-				return new SuccessResult("Eklendi");
-			
-		
+				var userServiceResult = this.userService.add(employer);
+				if(userServiceResult.isSuccess()) {
+					this.employerDao.save(employer);
+					return new SuccessResult("İş veren eklendi");
+				}
+				
+				else {
+					return userServiceResult;
+				}
+				
 		}
 		
 		return result;
 		
 	}
 	
-	private Result checkEmailForDomain(Employer employer) {
-		String webDomain = employer.getCompany().getWebsite().replace("www.", "");
-		if(employer.getUser().getEmail().contains(webDomain)) {
+	private Result checkEmailForDomain(EmployerForRegisterDto employerForRegisterDto) {
+		String webDomain = employerForRegisterDto.getWebsite().replace("www.", "");
+		if(employerForRegisterDto.getEmail().contains(webDomain)) {
 			return new SuccessResult();
 		}
 		return new ErrorResult("Email adresinizle web sayfası eşleşmiyor");

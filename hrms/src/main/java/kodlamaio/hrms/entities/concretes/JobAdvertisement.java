@@ -42,17 +42,12 @@ public class JobAdvertisement {
 	@Column(name="maxSalary")
 	private double maxSalary;
 	
-	@Column(name="relaseDate")
-	private Date relaseDate;
+	@Column(name="publishDate")
+	private Date publishDate;
 	
-	@Column(name="deadLine")
-	private Date deadLine;
+	@Column(name="deadline")
+	private Date deadline;
 	
-	@Column(name="workType")
-	private String workType;
-	
-	@Column(name="workTime")
-	private String workTime;
 	
 	@Column(name="positionName")
 	private String positionName;
@@ -60,18 +55,27 @@ public class JobAdvertisement {
 	
 	@NotNull
 	@NotBlank
-	@Column(name="numberOfPosition")
-	private int numberOfPosition;
+	@Column(name="numberOfOpenToWork")
+	private int numberOfOpenToWork;
 	
 	@Column(name="advertismentStatus")
 	private boolean advertismentStatus;
 	
-	@Column(name="city")
-	private String city;
+	@ManyToOne
+	@JoinColumn(name="cityId")
+	private City city;
 	
 	@ManyToOne
 	@JoinColumn(name="employerId")
 	private Employer employer;
+	
+	@ManyToOne
+	@JoinColumn(name="workTypeId")
+	private WorkType workType;
+	
+	@ManyToOne
+	@JoinColumn(name="workTimeId")
+	private WorkTime workTime;
 	
 
 }
