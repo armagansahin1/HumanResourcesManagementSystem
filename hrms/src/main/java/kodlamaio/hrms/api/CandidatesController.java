@@ -16,6 +16,7 @@ import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.entities.dtos.CandidateDetailsDto;
+import kodlamaio.hrms.entities.dtos.CandidateForRegisterDto;
 
 
 @RestController
@@ -46,9 +47,6 @@ public class CandidatesController {
 		return this.candidateService.getById(candidateId);
 	}
 	
-	@GetMapping("/getCandidateDetailsDto")
-DataResult<CandidateDetailsDto> getCandidateDetailsDto(@RequestParam("candidateId") int candidateId){
-		return this.candidateService.getCandidateDetailsDto(candidateId);
-	}
+
 	
 }

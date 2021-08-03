@@ -66,9 +66,7 @@ public class User {
 	@Column(name="EmailVerify")
 	private boolean emailVerify;
 	
-	
-	@OneToOne(mappedBy = "user")
-	private Candidate candidates;
+
 	
 	@OneToOne(mappedBy = "user")
 	private SystemPersonel systemPersonels;

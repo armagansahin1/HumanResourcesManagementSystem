@@ -41,25 +41,13 @@ public class EmployerManager implements EmployerService{
 	}
 
 	@Override
-	public Result add(EmployerForRegisterDto employerForRegisterDto){
+	public Result add(Employer employer){
 		
-		employerForRegisterDto.setWebsite(addWWW(employerForRegisterDto.getWebsite()));
+		employer.setWebsite(addWWW(employer.getWebsite()));
 
-		var result = BusinessRules.Run(new Result[]{checkEmailForDomain(employerForRegisterDto)});
+		var result = BusinessRules.Run(new Result[]{checkEmailForDomain(employer)});
 		
 		if(result == null) {
-
-				Employer employer = new Employer();
-				employer.setFirstName(employerForRegisterDto.getFirstName().toUpperCase());
-				employer.setLastName(employerForRegisterDto.getLastName().toUpperCase());
-				employer.setEmail(employerForRegisterDto.getEmail());
-				employer.setNationalityId(employerForRegisterDto.getNationalityId());
-				employer.setDateOfBirth(employerForRegisterDto.getDateOfBirth());
-				employer.setPassword(employerForRegisterDto.getPassword());
-				employer.setPhone(employerForRegisterDto.getPhone());
-				employer.setCompanyName(employerForRegisterDto.getCompanyName().toUpperCase());
-				employer.setWebsite(employerForRegisterDto.getWebsite());
-				employer.setAccountVerify(true);
 				
 				var userServiceResult = this.userService.add(employer);
 				if(userServiceResult.isSuccess()) {
@@ -73,13 +61,14 @@ public class EmployerManager implements EmployerService{
 				
 		}
 		
+		
 		return result;
 		
 	}
 	
-	private Result checkEmailForDomain(EmployerForRegisterDto employerForRegisterDto) {
-		String webDomain = employerForRegisterDto.getWebsite().replace("www.", "");
-		if(employerForRegisterDto.getEmail().contains(webDomain)) {
+	private Result checkEmailForDomain(Employer employer) {
+		String webDomain = employer.getWebsite().replace("www.", "");
+		if(employer.getEmail().contains(webDomain)) {
 			return new SuccessResult();
 		}
 		return new ErrorResult("Email adresinizle web sayfası eşleşmiyor");

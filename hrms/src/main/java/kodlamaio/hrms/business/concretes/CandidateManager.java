@@ -1,5 +1,6 @@
 package kodlamaio.hrms.business.concretes;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,25 +8,26 @@ import org.springframework.stereotype.Service;
 
 
 import kodlamaio.hrms.business.abstracts.CandidateService;
-
-
+import kodlamaio.hrms.business.abstracts.UserService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.CandidateDao;
 import kodlamaio.hrms.entities.concretes.Candidate;
-import kodlamaio.hrms.entities.dtos.CandidateDetailsDto;
+import kodlamaio.hrms.entities.dtos.CandidateForRegisterDto;
 
 @Service
 public class CandidateManager implements CandidateService {
 	
 	private CandidateDao candidateDao;
+	private UserService userService ;
 
 	@Autowired
-	public CandidateManager(CandidateDao candidateDao) {
+	public CandidateManager(CandidateDao candidateDao, UserService userService) {
 		
 		this.candidateDao = candidateDao;
+		this.userService = userService ;
 
 	}
 
@@ -36,9 +38,18 @@ public class CandidateManager implements CandidateService {
 
 	@Override
 	public Result add(Candidate candidate) {
+	
 		
-		this.candidateDao.save(candidate);
-		return new SuccessResult("Eklendi");
+		var userServiceResult = this.userService.add(candidate);
+		if(userServiceResult.isSuccess()) {
+			this.candidateDao.save(candidate);
+			return new SuccessResult("İş Arayan Eklendi");
+		}
+		else {
+			return userServiceResult;
+		}
+		
+
 	}
 
 	@Override
@@ -47,10 +58,7 @@ public class CandidateManager implements CandidateService {
 		return new SuccessDataResult<Candidate>(this.candidateDao.findById(candidateId).get());
 	}
 
-	@Override
-	public DataResult<CandidateDetailsDto> getCandidateDetailsDto(int candidateId) {
-		return new SuccessDataResult<CandidateDetailsDto>(this.candidateDao.getCandidateDetails(candidateId));
-	}
+
 
 
 

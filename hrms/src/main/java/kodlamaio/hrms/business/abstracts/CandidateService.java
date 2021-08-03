@@ -6,6 +6,7 @@ import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.entities.dtos.CandidateDetailsDto;
+import kodlamaio.hrms.entities.dtos.CandidateForRegisterDto;
 
 public interface CandidateService {
 
@@ -15,5 +16,5 @@ public interface CandidateService {
 	
 	DataResult<Candidate> getById(int candidateId);
 	
-	DataResult<CandidateDetailsDto> getCandidateDetailsDto(int candidateId);
+	
 }

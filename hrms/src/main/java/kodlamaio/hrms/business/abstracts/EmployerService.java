@@ -12,7 +12,7 @@ public interface EmployerService {
     
 	DataResult<List<Employer>> getAll();
 	
-	Result add(EmployerForRegisterDto employerForRegisterDto);
+	Result add(Employer employer);
 	
 	Result setAccountStatus(boolean status, int employerId);
 	

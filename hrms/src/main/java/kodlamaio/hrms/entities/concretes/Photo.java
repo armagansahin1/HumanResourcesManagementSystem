@@ -42,4 +42,5 @@ public class Photo {
 	@JoinColumn(name="candidateId")
 	private Candidate candidate;
 
+
 }

@@ -41,10 +41,14 @@ public class PhotosController {
 	
 	@PostMapping("/upload")
 	public Result upload(@RequestParam MultipartFile multipartFile, int candidateId) throws IOException{
+		
+		Candidate candidate = new Candidate();
+		candidate.setId(candidateId);
+		
 		if(!multipartFile.isEmpty()) {
 			var uploadResult = this.cloudService.upload(multipartFile);
 			Photo photo = new Photo(0,uploadResult.get("url").toString(),
-					uploadResult.get("public_id").toString(),new Date(),new Candidate(candidateId,null,null,null,null,null,null,null));
+					uploadResult.get("public_id").toString(),new Date(),candidate);
 			return this.photoService.add(photo);
 		}
 		return new ErrorResult("Resim seçmediniz");
